@@ -2,6 +2,9 @@
 
 Welcome to the back office of the coins project! This project is for study purposes, and all images were created using AI. Here, you can efficiently manage your products and orders. Let's break down the main functionalities you might need:
 
+![Coins Project](./loginScreen.png)
+
+
 ## Product Management
 
 1. **Add New Products**
