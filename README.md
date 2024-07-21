@@ -27,16 +27,16 @@ Welcome to the back office of the coins project! This project is for study purpo
    - See a list of all orders placed by customers.
    - Filter orders by date, customer, status (e.g., pending, shipped, completed, canceled).
 
-2. **Update Order Status(late)**
+2. **Update Order Status( commig soon )**
    - Change the status of an order to reflect its current stage in the process (e.g., processing, shipped, delivered).
 
-3. **Customer Information(late)**
+3. **Customer Information( commig soon )**
    - Access customer contact information to resolve issues or provide updates on their orders.
 
-4. **Generate Reports(late)**
+4. **Generate Reports( commig soon )**
    - Create and download reports on sales, inventory, and customer orders.
 
-## Analytics and Reports(late)
+## Analytics and Reports( commig soon )
 
 1. **Sales Reports**
    - Analyze sales data to understand trends and performance.
