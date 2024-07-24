@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { redirect } from 'next/navigation'
+
 import TextInput from "./components/input";
 
-export default function Home() {
+export default function Login() {
 
-  const [error, setError] = useState<string | null>(null);
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -20,21 +20,16 @@ export default function Home() {
       },
       body: JSON.stringify({ email, password })
     });
-    console.log(response)
     if (response.ok) {
       console.log('Login successful');
-      setError(null);
-      // Handle successful login
     } else {
       console.error('Login failed', response.status, response.statusText);
-      setError('Login failed: ' + response.statusText);
-      // Handle login failure
     }
   }
 
 
   return (
-    <main className="flex ">
+    <main className="flex">
       <div className="flex size-1/3 flex-col items-center justify-center h-screen bg-white">
         <h1 className="text-4xl font-bold text-vivid-orange text-center my-4">
           Welcome to your store manager Coins
@@ -53,6 +48,13 @@ export default function Home() {
             Login
           </button>
         </form>
+        <button
+            className="rounded-full  text-black p-2 w-full"
+            type="submit"
+            onSubmit={redirect("/signup")}
+          >
+            Create Account
+          </button>
       </div>
       <div className="flex size-2/3 flex-col items-center justify-center h-screen bg-[url('/bgLogin.jfif')] bg-cover	"></div>
     </main>
