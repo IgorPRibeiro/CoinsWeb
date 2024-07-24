@@ -1,32 +1,31 @@
 "use client";
 
-import { redirect } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 import TextInput from "./components/input";
+import api from "@/service";
+import { ILoginResponse } from "@/@types/user";
 
 export default function Login() {
-
+  const router = useRouter();
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const email = form.get('email');
-    const password = form.get('password');
+    const email = form.get("email");
+    const password = form.get("password");
 
-    const response = await fetch('http://localhost:3001/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password })
+    const { data, status } = await api.post<ILoginResponse>("/users/login", {
+      email,
+      password,
     });
-    if (response.ok) {
-      console.log('Login successful');
+    if (data.token) {
+      localStorage.setItem("authToken", data.token);
+      router.push("/dashboard");
     } else {
-      console.error('Login failed', response.status, response.statusText);
+      console.error("Login failed", status);
     }
   }
-
 
   return (
     <main className="flex">
@@ -49,12 +48,11 @@ export default function Login() {
           </button>
         </form>
         <button
-            className="rounded-full  text-black p-2 w-full"
-            type="submit"
-            onSubmit={redirect("/signup")}
-          >
-            Create Account
-          </button>
+          className="rounded-full  text-black p-2 w-full"
+          onClick={() => router.push("/signup")}
+        >
+          Create Account
+        </button>
       </div>
       <div className="flex size-2/3 flex-col items-center justify-center h-screen bg-[url('/bgLogin.jfif')] bg-cover	"></div>
     </main>

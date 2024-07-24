@@ -3,6 +3,8 @@ import { useState } from "react";
 import TextInput from "../components/input";
 
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import createAccount from "./api/createAccount";
 
 const schema = z.object({
   email: z
@@ -15,28 +17,35 @@ const schema = z.object({
 
 export default function SignUp() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const router = useRouter();
 
   async function handleCreateAccoutn(params: React.FormEvent<HTMLFormElement>) {
     params.preventDefault();
     const form = new FormData(params.currentTarget);
-    const email = form.get("email");
-    const name = form.get("name");
-    const password = form.get("password");
+    const email = form.get("email")?.toString() || "";
+    const name = form.get("name")?.toString() || "";
+    const password = form.get("password")?.toString() || "";
     try {
       schema.parse({ email, name, password });
-      setErrors({});
-    } catch (error) {
-        if (error instanceof z.ZodError) {
-          const fieldErrors: { [key: string]: string } = {};
-          error.errors.forEach(err => {
-            if (err.path.length > 0) {
-              fieldErrors[err.path[0]] = err.message;
-            }
-          });
-          setErrors(fieldErrors);
-        }
+
+      const response = await createAccount({ email, name, password });
+
+      if (response.mensagem) {
+        router.push("/");
       }
 
+      setErrors({});
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErrors: { [key: string]: string } = {};
+        error.errors.forEach((err) => {
+          if (err.path.length > 0) {
+            fieldErrors[err.path[0]] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+      }
+    }
   }
 
   return (
@@ -51,17 +60,29 @@ export default function SignUp() {
           </h3>
         </div>
         <form onSubmit={handleCreateAccoutn}>
-        <div className="my-4">
-            <TextInput placeholder="Email" type="text" name="email" />
-            {errors.email && <p className="text-red-500">{errors.email}</p>}
+          <div className="my-4">
+            <TextInput
+              placeholder="Email"
+              type="text"
+              name="email"
+              error={errors.email}
+            />
           </div>
           <div className="my-4">
-            <TextInput placeholder="Name" type="text" name="name" />
-            {errors.name && <p className="text-red-500">{errors.name}</p>}
+            <TextInput
+              placeholder="Name"
+              type="text"
+              name="name"
+              error={errors.name}
+            />
           </div>
           <div className="my-4">
-            <TextInput placeholder="Password" type="password" name="password" />
-            {errors.password && <p className="text-red-500">{errors.password}</p>}
+            <TextInput
+              placeholder="Password"
+              type="password"
+              name="password"
+              error={errors.password}
+            />
           </div>
           <button
             className="rounded-full bg-vivid-orange text-white p-2 w-full"
@@ -70,6 +91,12 @@ export default function SignUp() {
             Create Account
           </button>
         </form>
+        <button
+          className=" text-black p-2 w-full"
+          onClick={() => router.back()}
+        >
+          I already have an account
+        </button>
       </div>
     </main>
   );

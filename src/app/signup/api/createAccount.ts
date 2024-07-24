@@ -1,11 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { ICreateAccountParams, ICreateAccountResponse } from "@/@types/user";
+import api from "@/service";
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
-  ) {
-    const data = req.body
-    const id = await createItem(data)
-    res.status(200).json({ id })
-  }
-
+export default async function createAccount(params: ICreateAccountParams) {
+  const { data } = await api.post<ICreateAccountResponse>(
+    "/users/cadastro",
+    params
+  );
+  return data;
+}
