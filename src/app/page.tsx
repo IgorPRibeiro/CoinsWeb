@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import TextInput from "./components/input";
 import api from "@/service";
-import { ILoginResponse } from "@/@types/user";
+import { ILoginResponse, IUserResponse } from "@/@types/user";
 
 export default function Login() {
   const router = useRouter();
@@ -21,6 +21,13 @@ export default function Login() {
     });
     if (data.token) {
       localStorage.setItem("authToken", data.token);
+      const { data: user } = await api.get<IUserResponse>("/users", {
+        headers: {
+          Authorization: `Bearer ${data.token}`,
+        },
+      });
+
+      localStorage.setItem("user", JSON.stringify(user));
       router.push("/dashboard");
     } else {
       console.error("Login failed", status);

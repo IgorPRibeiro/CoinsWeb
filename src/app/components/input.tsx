@@ -1,8 +1,8 @@
-import React from "react";
+import React, { HTMLInputTypeAttribute } from "react";
 
 interface TextInputProps {
   placeholder: string;
-  type: string;
+  type: HTMLInputTypeAttribute;
   name: string;
   error?: string;
 }

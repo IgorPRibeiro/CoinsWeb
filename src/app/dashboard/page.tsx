@@ -1,5 +1,9 @@
 "use client";
 
 export default function Dashboard() {
-  return <main className="flex bg-slate-300 min-h-screen"></main>;
+  return (
+    <div className="flex min-h-screen">
+      <main className="flex-1 bg-slate-300"></main>
+    </div>
+  );
 }
