@@ -35,9 +35,9 @@ export default function Login() {
   }
 
   return (
-    <main className="flex">
-      <div className="flex size-1/3 flex-col items-center justify-center h-screen bg-white">
-        <h1 className="text-4xl font-bold text-vivid-orange text-center my-4">
+    <main className="flex sm:justify-center">
+      <div className="flex sm:w-screen flex-col items-center justify-center h-screen bg-white sm:items-center sm:justify-center">
+        <h1 className="text-2xl sm:text-3xl sm:text-4xl w-full  font-bold text-vivid-orange text-center my-4">
           Welcome to your store manager Coins
         </h1>
         <form onSubmit={handleLogin} className="w-1/2">
@@ -61,7 +61,7 @@ export default function Login() {
           Create Account
         </button>
       </div>
-      <div className="flex size-2/3 flex-col items-center justify-center h-screen bg-[url('/bgLogin.jfif')] bg-cover	"></div>
+      <div className="hidden sm:flex size-2/3 flex-col items-center justify-center h-screen bg-[url('/bgLogin.jfif')] bg-cover"></div>
     </main>
   );
 }

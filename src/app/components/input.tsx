@@ -1,13 +1,19 @@
-import React, { HTMLInputTypeAttribute } from "react";
+import React, { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
 
-interface TextInputProps {
+interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
   type: HTMLInputTypeAttribute;
   name: string;
   error?: string;
 }
 
-const TextInput = ({ placeholder, type, name, error }: TextInputProps) => {
+const TextInput = ({
+  placeholder,
+  type,
+  name,
+  error,
+  ...rest
+}: TextInputProps) => {
   return (
     <>
       <input
@@ -15,6 +21,7 @@ const TextInput = ({ placeholder, type, name, error }: TextInputProps) => {
         placeholder={placeholder}
         type={type}
         name={name}
+        {...rest}
       />
       {error && <p className="text-red-500">{error}</p>}
     </>
