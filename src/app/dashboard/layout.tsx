@@ -8,7 +8,7 @@ export default function DashboardLayout({
 }) {
   return (
     <section className="flex min-h-screen bg-slate-50">
-      <SideBar />
+      {/* <SideBar /> */}
 
       <div className="flex flex-col w-full">
         <Header />
